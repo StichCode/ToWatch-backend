@@ -17,10 +17,7 @@ def create_app():
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix="/api")
 
-    from app.authentication import bp as auth_bp
-    app.register_blueprint(api_bp, url_prefix="/auth")
-
     return app
 
-from app import models
 
+from app import models
