@@ -24,10 +24,39 @@ from app import db
 
 
 class User(db.Model):
-    _id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(64), index=True, unique=True, comment='Логин пользователя')
     email = db.Column(db.String(64), index=True, unique=True, comment='Почтовый ящик')
     password = db.Column(db.String(365), comment='Пароль(хэш)')
+
+
+class Notify(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    film_id = db.Column()
+
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(128), unique=True)
+
+
+class Films(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column()
+    image_path = db.Column()
+    original_title = db.Column()
+    english_title = db.Column()
+    year = db.Column()
+    country = db.Column()
+    producer = db.Column()
+    scenario = db.Column()
+
+    category = db.Column()  # Foreign key
+
+
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column()
 
 
 # class Watch(db.Model):
