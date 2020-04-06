@@ -23,21 +23,11 @@ from app import db
 #     friend = "with friends"
 
 
-class Users(db.Model):
+class User(db.Model):
     _id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(64), index=True, unique=True, comment='Логин пользователя')
     email = db.Column(db.String(64), index=True, unique=True, comment='Почтовый ящик')
-    password_hash = db.Column(db.String(365), comment='Пароль(хэш)')
-    token = db.Column(db.String(365), index=True, unique=True)
-    token_expiration = db.Column(db.DateTime)
-
-    def __repr__(self):
-        return f"User: {self.username} - {self.token} {self.password_hash} - {self.email}"
-
-    def __init__(self, username, password, email):
-        self.username = username
-        self.password_hash = password
-        self.email = email
+    password = db.Column(db.String(365), comment='Пароль(хэш)')
 
 
 # class Watch(db.Model):
@@ -53,4 +43,4 @@ class Users(db.Model):
 #     rating_by_other = db.Column(db.Integer, comment="рейтинг из какой то системы")
 #     with_who = db.Column(db.Enum(), comment="с кем посмотреть")
 #     stopped = db.Column(db.String(64), comment="где остановился")
-#     review_user = db.Column(db.String(256), comment="отзыва пользователя")
+#     review_user = db.Column(db.String(256), comment="отзыва пользователя")ы
