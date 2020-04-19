@@ -1,7 +1,5 @@
 default:
   before_script:
-    - sudo apt-get update -qq
-    - sudo apt-get install -y -qq python3.8 python3.8-dev python3.8-venv python3-setuptools libpq-dev
     - export LOCAL_DIR=/home/parker/servers/app_w2s
 
 
