@@ -10,7 +10,7 @@ from app.database.models import User
 def login():
     data = request.get_json() or {}
     if not data or "username" not in data or "password" not in data:
-        return jsonify(message="No data for authorization"), 204
+        return jsonify(message="No data for authorization"), 402
     response = verify_password(data)
     if response is not None:
         response['access'] = create_access_token(identity=data["username"])
