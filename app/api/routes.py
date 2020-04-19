@@ -8,7 +8,7 @@ from app.database.models import Films
 def get_films():
     data = Films.all_to_dict()
     if not data:
-        return jsonify(message="fuck u"), 404
+        return jsonify(message="no data, fucking stupid idiot."), 404
     return jsonify(data), 200
 
 

@@ -1,0 +1,25 @@
+default:
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq python3.8 python3.8-dev python3.8-venv python3-setuptools libpq-dev
+    - export LOCAL_DIR=/home/parker/servers/app_w2s
+
+
+
+stages:
+  - dev-deploy
+
+
+dev-deploy:
+  stage: dev-deploy
+  timeout: 20 min
+  script:
+    - sudo systemctl stop w2s.service
+    - rsync -a --info=progress2 --delete . $LOCAL_DIR/app
+    - rm -rf $LOCAL_DIR/venv
+    - python3.8 -m venv $LOCAL_DIR/venv && source $LOCAL_DIR/venv/bin/activate && pip install -r $LOCAL_DIR/app/requirements.txt && export FLASK_APP=$LOCAL_DIR/app/main.py
+    - source $LOCAL_DIR/venv/bin/activate && flask db migrate
+    - source $LOCAL_DIR/venv/bin/activate && flask db upgrade
+    - sudo systemctl start sys360.service
+  tags:
+    - ya-runner
