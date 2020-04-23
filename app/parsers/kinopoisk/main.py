@@ -1,3 +1,5 @@
+from urllib.parse import urlparse, parse_qs
+
 import json
 import re
 from selenium import webdriver
@@ -16,6 +18,10 @@ class Parser:
         self._next_page = None
         self.first_200 = []
 
+    def url_parse(self):
+        urlparse()
+        pass
+
     def sign_in(self, headless):
         options = webdriver.FirefoxOptions()
         if headless:
@@ -24,7 +30,7 @@ class Parser:
 
     def final(self):
         self._dr.quit()
-        with open("../../../static/first_200.json", 'w') as f:
+        with open("../../../static/second_var.json", 'w') as f:
             json.dump(self.first_200, f)
 
     def write_to_file(self):
@@ -52,8 +58,7 @@ class Parser:
         self.write_to_file()
 
     def start(self):
-        for i in range(1,55):
-
+        for i in range(1, 55):
             self.change_page()
             item_list = self._dr.find_element_by_css_selector("#itemList")
             for count, div in enumerate(item_list.find_elements_by_xpath("./div")):
@@ -77,7 +82,7 @@ class Parser:
 
 
 if __name__ == '__main__':
-    parser = Parser(headless=True)
+    parser = Parser()
     try:
         parser.start()
     finally:
