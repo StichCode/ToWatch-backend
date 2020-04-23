@@ -32,21 +32,25 @@ for el in table.find_elements_by_xpath("./tr"):
         pass
     else:
         try:
-            span = el.find_element_by_xpath("./td[2]/span")
+            origin_title = el.find_element_by_xpath("./td[2]/span")
+            mark = el.find_element_by_xpath("./td[3]/div/a")
+            votes = el.find_element_by_xpath("./td[3]/div/span")
         except NoSuchElementException:
-            span = None
+            origin_title = None
+            mark = None
+            votes = None
+
         MAIN_JSON.append({
-            "title": re.split(" ", el.find_element_by_xpath("./td[2]/a").text)[0],
-            "origin_title": "" if span is None else span.text,
+            "title": re.findall("\D+", el.find_element_by_xpath("./td[2]/a").text)[0].strip(),
+            "origin_title": "" if origin_title is None else origin_title.text,
             "year": re.findall("[0-9]+", el.find_element_by_xpath("./td[2]/a").text)[0],
-            "mark": el.find_element_by_xpath("./td[3]/div/a").text,
-            "count_votes": el.find_element_by_xpath("./td[3]/div/span").text,
+            "mark": "" if mark is None else mark.text,
+            "count_votes": "" if votes is None else votes.text,
             "_link": el.find_element_by_xpath("./td[2]/a").get_attribute('href')
         })
 
+dr.quit()
 print(MAIN_JSON)
 with open("top250.json", "w") as f:
     json.dump(MAIN_JSON, f)
 
-
-dr.quit()
