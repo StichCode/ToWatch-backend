@@ -2,7 +2,13 @@ import os
 
 
 class Config(object):
+    LOGIN = ''
+    PASS = ''
+    URL = ''
+    PORT = ''
+    DATABASE = ''
+    url = f"postgresql+psycopg2://{LOGIN}:{PASS}@{URL}:{PORT}/{DATABASE}"
     SQLALCHEMY_DATABASE_URI = os.environ.setdefault("DATABASE_URL",
-                                                    'postgresql+psycopg2://tasknote:12345@localhost:5432/tasknote')
+                                                    url)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "1"
